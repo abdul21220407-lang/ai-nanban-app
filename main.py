@@ -1,8 +1,19 @@
 import streamlit as st
 import google.generativeai as genai
 
-# Mobile UI Page Settings
-st.set_page_config(page_title="AI NANBAN", page_icon="🤖")
+# --- 1. UNGA APP NAME AND LOGO BRANDING ---
+# Inga page_title ulla unga custom app name, page_icon ulla unga logo emoji podunga
+st.set_page_config(page_title="AI NANBAN", page_icon="🤖", layout="centered")
+
+# Hide Streamlit Default Menu and Footer (Streamlit branding-ai maraika)
+hide_menu_style = """
+        <style>
+        #MainMenu {visibility: hidden;}
+        footer {visibility: hidden;}
+        header {visibility: hidden;}
+        </style>
+        """
+st.markdown(hide_menu_style, unsafe_allow_html=True)
 
 st.title("🤖 AI NANBAN")
 st.write("Online 🟢")
