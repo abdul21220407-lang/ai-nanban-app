@@ -1,5 +1,5 @@
 import streamlit as st
-from google import genai
+import google.generativeai as genai
 
 # Mobile UI Page Settings
 st.set_page_config(page_title="AI NANBAN", page_icon="🤖")
@@ -9,6 +9,9 @@ st.write("Online 🟢")
 
 # Safe API Key Implementation Block
 API_KEY = "AQ.Ab8RN6LYqLe30ycVp9TEdaPfs7s8vD2A_f8lImZRJjWe6qkBsw"
+
+# Configure the legacy library
+genai.configure(api_key=API_KEY.strip())
 
 # Chat History setup
 if "messages" not in st.session_state:
@@ -25,13 +28,10 @@ if user_prompt := st.chat_input("Type a message nanba..."):
         st.markdown(user_prompt)
     st.session_state.messages.append({"role": "user", "content": user_prompt})
 
-    # AI Response Compilation
+    # AI Response Compilation using active legacy model
     try:
-        client = genai.Client(api_key=API_KEY.strip())
-        response = client.models.generate_content(
-            model='gemini-2.5-flash',
-            contents=user_prompt,
-        )
+        model = genai.GenerativeModel('gemini-1.5-flash')
+        response = model.generate_content(user_prompt)
         ai_response = response.text
     except Exception as ex:
         ai_response = f"Error: {str(ex)}"
